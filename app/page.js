@@ -1,66 +1,72 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client'
 
-export default function Home() {
+import React , { useState, useEffect, useRef } from "react";
+import styles from "./styles/styles.module.scss";
+import { useSelector, useDispatch } from "react-redux";
+import ControlPanel from "./components/ControlPanel";
+import Clue from "./components/Clue";
+import Crossword from "./components/Crossword";
+import { 
+  setUpdateCrosswordData,
+} from "./store/crosswordSlice";
+
+
+ function Home() {
+
+  const crosswordData = useSelector((state)=> state.crossword?.currentCrosswordData)
+  const dispatch = useDispatch();
+  const [activeClue, setActiveClue] = useState("");
+  const [checkAnswer, setCheckAnswer] = useState(false);
+  const [answerCheckData, setAnswerCheckData] = useState([]);
+
+
+
+  //used for add cells coordinates in redux
+  const generateCellsCoordinatesFun = () => {
+    let newCrosswordData = crosswordData.map((clue)=>({
+      ...clue,
+      colCoordinates: clue.direction === "across" ? Array.from({ length: clue.answer.length }, (_, i) => i + clue.col) : [clue.col],
+      rowCoordinates: clue.direction === "down" ? Array.from({ length: clue.answer.length }, (_, i) => i + clue.row) : [clue.row],
+    }))
+
+    dispatch(setUpdateCrosswordData(newCrosswordData))    
+  }
+
+  useEffect(()=>{
+    generateCellsCoordinatesFun()
+  },[])
+
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div className={styles.mainContainer}>
+      <h1>
+        Crossword Puzzel
+      </h1>
+
+      <h6>
+        Use arrow keys to navigate - Use click to switch between select across or down highlight inside the grid
+      </h6>
+
+      <ControlPanel
+        setCheckAnswer={setCheckAnswer}
+        setAnswerCheckData={setAnswerCheckData}
+      />
+      
+      <div className={styles.gameContainerSty}>
+        <Clue 
+          activeClue={activeClue}
+          setActiveClue={setActiveClue}
         />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.js file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+        
+        <Crossword 
+          checkAnswer={checkAnswer}
+          answerCheckData={answerCheckData}
+          setActiveClue={setActiveClue}
+        />
+      </div>
     </div>
   );
 }
+
+
+export default Home;

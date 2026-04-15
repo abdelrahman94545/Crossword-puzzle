@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Game explanation
 
-## Getting Started
+User select clue from the clus section to highlight puzzle cells or using mouse to click on cell to select cells , there is option to switch puzzle cell highlight across or down by clicks or using keys arrows and user can clear cells using backspace button.  
+There is a control buttons like check answer button to check user answer if there is cells has wrong value it will takes red border , solve crowsword button used to show all answers and there is clear button to reset the game.
+
+
+
+## Setup instructions
 
 First, run the development server:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Environment needs
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Node 20 or more
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Structure
 
-## Learn More
+We have three main components:
+- ControlPanel: contain timer and buttons
+- Clue: contain clue section
+- Crossword: contain the puzzle
 
-To learn more about Next.js, take a look at the following resources:
+The structure is connect the components with the redux toolkit to update the initialState with user changes like enter letter , delete letters , change cells highlights and run buttons. 
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Explane componenst functions
 
-## Deploy on Vercel
+### in page
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- generateCellsCoordinatesFun : used for add cells coordinates in redux
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### in ControlPanel 
+-checkAnswersFun : used for check cells answers if is it right or wrong , in wrong case there is red border will appear around the cell
+  
+
+### in Clue
+
+- highlightCellsFun : used for select highlight cells by arrow keys
+
+### in Crossword
+
+- highlightClickedCellsFun : used for select highlight cells by click
+- handleKeyDown : used for select highlight cells by click and enter user data
+
+
+
+## Docker configuration
+
+### Build the Docker Image
+
+```bash
+docker build -t nextjs-app .
+```
+
+### Run the Container
+
+```bash
+docker build -t nextjs-app .
+```
+
+### App will be available at:
+
+http://localhost:3000

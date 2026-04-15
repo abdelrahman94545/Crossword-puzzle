@@ -1,4 +1,18 @@
-:root {
+
+
+body
+{
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+
+
+
+
+
+
+
+/* :root {
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -46,4 +60,4 @@ a {
   html {
     color-scheme: dark;
   }
-}
+} */

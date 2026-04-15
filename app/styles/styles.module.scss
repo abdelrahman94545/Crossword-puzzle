@@ -1,0 +1,232 @@
+.mainContainer
+{
+    h1
+    {
+        text-align: center;
+        color: #fff;
+        text-shadow: 2px 2px 4px #0003;
+        margin-bottom: 10px;
+        font-size: 2.5rem;
+    }
+
+    h6
+    {
+        text-align: center;
+        color: #ffffffe6;
+        font-size: .9rem;
+        font-weight: lighter;
+    }
+
+    .controlPanelContainerSty
+    {
+        display: flex;
+        background: #ffffff;
+        padding: 17px;
+        justify-content: space-between;
+        border-radius: 15px;
+
+        .timerSty
+        {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 10px;
+            color: #ffffff;
+            border-radius: 5px;
+
+            span
+            {
+                padding: 5px;
+                font-size: 18px;
+            }
+        }
+
+        button
+        {
+            padding: 7px 15px;
+            margin: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:nth-child(1),
+        button:nth-child(2)
+        {
+            color: #fff;
+            background-color: #48bb78;
+        }
+
+        button:nth-child(3)
+        {
+            color: #fff;
+            background-color: #f56565;
+        }
+    }
+
+
+    .gameContainerSty
+    {
+        justify-content: space-evenly;
+        display: flex;
+        margin-top: 50px;
+        margin-bottom: 50px;
+
+        .clueContainerSty
+        {
+            padding: 20px 15px;
+            background-color: #ffffff;
+            width: 20%;
+            margin: 10px 0;
+            border-radius: 15px;
+
+            .AcrossContainer,
+            .downContainer
+            {
+                & > div:nth-child(2)
+                {
+                    max-height: 140px;
+                    overflow-y: scroll;
+                }
+
+                p
+                {
+                    margin: 0;
+                    padding: 8px;
+                    font-size: 15px;
+                    color: #282828;
+                }
+
+            & > p:nth-child(1)
+                {
+                    color: #2b6cb0;
+                    border-bottom: 2px solid;
+                    border-bottom-color: #4299e1;
+                    font-size: 20px;
+                    font-weight: bolder;
+                    padding-bottom: 5px;
+                    margin: 0;
+                    margin-bottom: 5px;
+                }
+
+                .highlightClueSty
+                {
+                    background-color: #ebf8ff;
+                    border-left: 3px solid #4299e1;
+                    font-size: 15px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        
+
+        .puzzelContainer
+        {
+            background-color: #ffffff;
+            padding: 25px;
+            margin: 10px 0;
+            border-radius: 15px;
+            text-align: center;
+
+            .gridContainer
+            {
+                width: 484px;
+
+                input 
+                {
+                    width: 30px;
+                    height: 30px;
+                    border: 1px solid #717171;
+                }
+
+
+                .blockecdCellSty
+                {
+                    background-color: #000000;
+                }
+
+                .highlightCellSty
+                {
+                    background-color: #673ab757;
+                }
+
+                .activeCell:focus
+                {
+                    background-color: #673ab7a6;
+                }
+
+                .wrongAnswerCheckSty
+                {
+                    border: 1px solid #ff1100;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .mainContainer
+    {
+        .controlPanelContainerSty
+        {
+            flex-direction: column;
+
+            .timerSty
+            {
+                width: 30%;
+                margin: 0 auto;
+                margin-bottom: 5px;
+            }
+            
+            & > div:nth-child(1)
+            {
+                text-align: center;
+            }
+
+            & > div:nth-child(2)
+            {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            button
+            {
+                width: 46%;
+                margin: 7px;
+            }
+        }
+
+        .gameContainerSty
+        {
+            flex-direction: column;
+            align-items: center;
+
+            .clueContainerSty
+            {
+                width: 50%;
+                margin: 0 auto;
+                margin-top: 20px;
+            }
+        }
+    }
+}
+
+@media (max-width: 550px) {
+    .gameContainerSty
+        {
+            .gridContainer
+            {
+                width: 300px !important;
+
+                input 
+                {
+                    width: 16px !important;
+                    height: 16px !important;
+                }
+            }
+        }
+}
+
+
