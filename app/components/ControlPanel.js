@@ -1,4 +1,4 @@
-import React , { useState, useEffect } from "react";
+import React , { useState, useEffect, useRef } from "react";
 import styles from "../styles/styles.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -15,6 +15,7 @@ const ControlPanel = ({
     const gridData = useSelector((state)=> state.crossword?.currentGridData)
     const crosswordSolution = useSelector((state)=> state.crossword?.crosswordSolution)
     const dispatch = useDispatch();
+    const intervalRef = useRef(null);
     const [time, setTime] = useState({
         minutes: 0,
         seconds: 0,
@@ -52,27 +53,24 @@ const ControlPanel = ({
     }
 
     // Timer
-    useEffect(() => {
-      const interval = setInterval(() => {
-        setTime((prev) => {
-          let { minutes, seconds } = prev;
+     useEffect(() => {
+    // prevent multiple intervals
+    if (intervalRef.current) return;
 
-          if (seconds === 59) {
-            return {
-              minutes: minutes + 1,
-              seconds: 0,
-            };
-          }
+    intervalRef.current = setInterval(() => {
+      setTime((prev) => {
+        if (prev.seconds === 59) {
+          return { minutes: prev.minutes + 1, seconds: 0 };
+        }
+        return { minutes: prev.minutes, seconds: prev.seconds + 1 };
+      });
+    }, 1000);
 
-          return {
-            minutes,
-            seconds: seconds + 1,
-          };
-        });
-      }, 1000);
-
-      return () => clearInterval(interval);
-    }, []);
+    return () => {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    };
+  }, []);
 
 
     return (
